@@ -1,0 +1,11 @@
+.venv/
+venv/
+.env
+.env*/
+*.db
+__pycache__/
+*.pyc
+gitignore_backup/
+requirements_old/
+__pycache__/
+*.py[cod]

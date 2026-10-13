@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Plan smarter with PocketSmart AI.">
+    <title>{{ app_name }}</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <script src="/static/app.js" defer></script>
+</head>
+<body>
+    <header class="topbar">
+        <a class="brand" href="/">
+            <span class="brand-icon">P</span>
+            <span>PocketSmart <span class="accent">AI</span></span>
+        </a>
+        <div class="header-actions">
+            <span id="user-label" class="user-label"></span>
+            <button id="logout-btn" class="button button-outline hidden"
+                    type="button">Log out</button>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="hero">
+            <p class="eyebrow">SMARTER SPENDING STARTS HERE</p>
+            <h1>Make every rupee <span class="accent">count.</span></h1>
+            <p class="hero-copy">
+                Create personalized plans for your home, parties and
+                special occasions while keeping your budget in mind.
+            </p>
+        </section>
+
+        <section id="auth-section" class="panel auth-panel">
+            <div class="tabs" role="tablist">
+                <button class="tab active" type="button"
+                        data-auth-mode="login">Log in</button>
+                <button class="tab" type="button"
+                        data-auth-mode="register">Create account</button>
+            </div>
+
+            <form id="auth-form">
+                <div id="name-group" class="field hidden">
+                    <label for="auth-name">Your name</label>
+                    <input id="auth-name" name="name"
+                           type="text" minlength="2" maxlength="100"
+                           autocomplete="name">
+                </div>
+
+                <div class="field">
+                    <label for="auth-email">Email address</label>
+                    <input id="auth-email" name="email"
+                           type="email" required
+                           autocomplete="email"
+                           placeholder="you@example.com">
+                </div>
+
+                <div class="field">
+                    <label for="auth-password">Password</label>
+                    <input id="auth-password" name="password"
+                           type="password" minlength="8"
+                           maxlength="128" required
+                           autocomplete="current-password"
+                           placeholder="At least 8 characters">
+                </div>
+
+                <button id="auth-submit" class="button button-primary"
+                        type="submit">Log in</button>
+            </form>
+            <p id="auth-message" class="message" aria-live="polite"></p>
+        </section>
+
+        <section id="dashboard" class="hidden">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">YOUR PERSONAL PLANNER</p>
+                    <h2>What are we planning?</h2>
+                </div>
+            </div>
+
+            <div class="planner-grid">
+                <button class="planner-card selected" type="button"
+                        data-plan-type="home">
+                    <span class="planner-icon">⌂</span>
+                    <strong>Home budget</strong>
+                    <span>Furniture, lighting and essentials</span>
+                </button>
+
+                <button class="planner-card" type="button"
+                        data-plan-type="party">
+                    <span class="planner-icon">✦</span>
+                    <strong>Party planner</strong>
+                    <span>Food, guests and decorations</span>
+                </button>
+
+                <button class="planner-card" type="button"
+                        data-plan-type="jewelry">
+                    <span class="planner-icon">◇</span>
+                    <strong>Jewelry ideas</strong>
+                    <span>Accessories for your occasion</span>
+                </button>
+            </div>
+
+            <section class="panel planner-panel">
+                <h2 id="planner-title">Home budget planner</h2>
+                <p class="muted">
+                    Tell us your budget and preferences to get started.
+                </p>
+
+                <form id="planner-form">
+                    <div class="field">
+                        <label for="budget">Total budget (₹)</label>
+                        <input id="budget" name="budget" type="number"
+                               min="1" max="100000000"
+                               value="10000" required>
+                    </div>
+
+                    <div class="two-column">
+                        <div class="field" id="rooms-group">
+                            <label for="rooms">Number of rooms</label>
+                            <input id="rooms" name="rooms" type="number"
+                                   min="1" max="100" value="1">
+                        </div>
+
+                        <div class="field hidden" id="people-group">
+                            <label for="people">Number of guests</label>
+                            <input id="people" name="people" type="number"
+                                   min="1" max="10000" value="10">
+                        </div>
+
+                        <div class="field">
+                            <label for="style">Preferred style</label>
+                            <select id="style" name="style">
+                                <option value="">No preference</option>
+                                <option value="Modern">Modern</option>
+                                <option value="Traditional">Traditional</option>
+                                <option value="Minimal">Minimal</option>
+                                <option value="Elegant">Elegant</option>
+                                <option value="Budget-friendly">Budget-friendly</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="occasion">Occasion or room type</label>
+                        <input id="occasion" name="occasion" type="text"
+                               maxlength="120"
+                               placeholder="e.g. Bedroom, birthday, wedding">
+                    </div>
+
+                    <div class="field">
+                        <label for="requirements">Additional requirements</label>
+                        <textarea id="requirements" name="requirements"
+                                  maxlength="2000" rows="3"
+                                  placeholder="Tell us what you need..."></textarea>
+                    </div>
+
+                    <button id="generate-btn"
+                            class="button button-primary"
+                            type="submit">Generate my plan</button>
+                </form>
+
+                <p id="planner-message" class="message"
+                   aria-live="polite"></p>
+            </section>
+
+            <section id="result-section" class="panel hidden">
+                <div class="result-heading">
+                    <div>
+                        <p class="eyebrow">YOUR RECOMMENDATIONS</p>
+                        <h2 id="result-title">Your plan</h2>
+                    </div>
+                    <span id="provider-label" class="provider-pill"></span>
+                </div>
+
+                <p id="result-summary" class="muted"></p>
+
+                <div class="budget-summary">
+                    <div>
+                        <span>Budget</span>
+                        <strong id="result-budget">₹0</strong>
+                    </div>
+                    <div>
+                        <span>Estimated total</span>
+                        <strong id="result-total">₹0</strong>
+                    </div>
+                    <div>
+                        <span>Remaining</span>
+                        <strong id="result-remaining">₹0</strong>
+                    </div>
+                </div>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Qty.</th>
+                                <th>Unit price</th>
+                                <th>Total</th>
+                                <th>Find</th>
+                            </tr>
+                        </thead>
+                        <tbody id="items-body"></tbody>
+                    </table>
+                </div>
+
+                <h3>Helpful tips</h3>
+                <ul id="tips-list" class="tips-list"></ul>
+                <p class="fine-print">
+                    Prices are estimates, not live store quotes.
+                    Check availability, delivery charges and seller
+                    details before purchasing.
+                </p>
+            </section>
+
+            <section class="panel history-panel">
+                <div class="result-heading">
+                    <div>
+                        <p class="eyebrow">SAVED PLANS</p>
+                        <h2>Your history</h2>
+                    </div>
+                    <button id="refresh-history" type="button"
+                            class="button button-outline">Refresh</button>
+                </div>
+                <div id="history-list" class="history-list">
+                    <p class="muted">Log in to see your saved plans.</p>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2026 PocketSmart AI · Plan wisely. Spend thoughtfully.</p>
+    </footer>
+</body>
+</html>
